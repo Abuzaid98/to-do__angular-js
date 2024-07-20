@@ -10,8 +10,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <style>
         body {
-            background-color: #7e7d7d;
+            background-color: #8EC5FC;
+            background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+
         }
+
 
         .todo__wrapper {
             width: 100%;
@@ -20,6 +23,7 @@
             padding: 2rem;
             background-color: #fff;
             border-radius: 2rem;
+            min-height: calc(100vh - 6rem);
         }
 
         .form-check-input[type=checkbox] {
@@ -67,16 +71,21 @@
         }
 
         @media (max-width:525px) {
-            h1{
+            h1 {
                 font-size: 22px;
             }
+
             .todo__wrapper {
                 padding: 1rem;
             }
-            
-            .todo__table, .form-control, .form-select {
+
+            .todo__form,
+            .todo__form button,
+            .todo__table,
+            .form-control,
+            .form-select {
                 font-size: 12px;
-                
+
             }
         }
     </style>
@@ -100,13 +109,11 @@
                     </div>
                 </form>
             </div>
-            <hr>
 
             <!-- Filtering input -->
             <input type="text" ng-model="filterVal" ng-change="inputFilter()" class="form-control my-2"
                 placeholder="Search your items">
 
-            <hr>
 
             <!-- Select option to show number of items in one time -->
             <select class="form-select my-2" ng-model="showItem" ng-init="showItem = '5'" ng-change="showItemChange()">
@@ -165,9 +172,9 @@
                     </tr>
                 </table>
             </div>
-            <hr>
 
-            <nav ng-cloak class="overflow-x-auto" aria-label="Page navigation example" ng-if="filteredItems.length">
+            <nav ng-cloak class="overflow-x-auto mt-2" aria-label="Page navigation example"
+                ng-if="filteredItems.length">
                 <ul class="pagination">
                     <li class="page-item" ng-class="{ 'disabled': currentPage === 0 }">
                         <a class="page-link" href="" ng-click="setPage(currentPage - 1)">Previous</a>
