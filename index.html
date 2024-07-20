@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+        body {
+            background-color: #7e7d7d;
+        }
+
+        .todo__wrapper {
+            width: 100%;
+            max-width: 700px;
+            margin: auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 2rem;
+        }
+
+        .form-check-input[type=checkbox] {
+            border-radius: var(--bs-border-radius);
+            border-color: var(--bs-success);
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        .form-check-input:focus {
+            border-color: var(--bs-success);
+            outline: 0;
+            box-shadow: 0 0 0 .25rem rgb(25, 135, 84, .25);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--bs-success);
+            border-color: var(--bs-success);
+        }
+
+        table {
+            width: 100%;
+            border-spacing: .3rem;
+            border: 2px solid #7e7d7d;
+        }
+
+        td,
+        th {
+            border: 1px solid #7e7d7d;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #dddddd;
+        }
+
+        [ng\:cloak],
+        [ng-cloak],
+        [data-ng-cloak],
+        [x-ng-cloak],
+        .ng-cloak,
+        .x-ng-cloak {
+            display: none !important;
+        }
+
+        @media (max-width:525px) {
+            h1{
+                font-size: 22px;
+            }
+            .todo__wrapper {
+                padding: 1rem;
+            }
+            
+            .todo__table, .form-control, .form-select {
+                font-size: 12px;
+                
+            }
+        }
+    </style>
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl" class="py-5">
+    <div class="container">
+        <div class="todo__wrapper">
+            <h1 class="text-center mb-4 fw-bold">Please Add To Do into list</h1>
+            <div class="todo__form">
+                <form ng-submit="formSubmit()" class="row">
+                    <div class="col-8">
+                        <input type="text" ng-model="todos.todo" id="myInput" class="form-control"
+                            placeholder="Add your items">
+                        <span ng-cloak ng-show="fill" class="text-danger">{{writeSome}}</span>
+                    </div>
+                    <div class="col-4">
+                        <button ng-cloak type="submit" id="submitBtn" class="btn btn-success w-100">
+                            {{updateVal ? "Update" : "Add"}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <hr>
+
+            <!-- Filtering input -->
+            <input type="text" ng-model="filterVal" ng-change="inputFilter()" class="form-control my-2"
+                placeholder="Search your items">
+
+            <hr>
+
+            <!-- Select option to show number of items in one time -->
+            <select class="form-select my-2" ng-model="showItem" ng-init="showItem = '5'" ng-change="showItemChange()">
+                <option value="5">Show 5 items</option>
+                <option value="6">Show 6 items</option>
+                <option value="8">Show 8 items</option>
+                <option value="10">Show 10 items</option>
+                <option value="15">Show 15 items</option>
+            </select>
+
+            <p ng-cloak class="text-danger" ng-if="!filteredItems.length">There's no to do</p>
+
+            <div class="todo__table overflow-x-auto">
+
+                <table ng-cloak ng-if="filteredItems.length">
+                    <tr>
+                        <th style="width: 11%;">SN</th>
+                        <th style="width: 75%;">Todos</th>
+                        <th>Done?</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr ng-repeat="item in filteredItems | limitTo: showItem : currentPage * showItem track by $index">
+                        <th>{{currentPage * showItem + $index + 1}}.</th>
+                        <td ng-class="{'text-decoration-line-through': item.isComplete}" class="fw-semibold">
+                            {{item.todo}}
+                        </td>
+                        <td class="text-center">
+                            <input class="form-check-input" type="checkbox"
+                                ng-change="isCompFunc(currentPage * showItem + $index)" ng-model="item.isComplete">
+                        </td>
+                        <td>
+                            <div class="buttons col-2 d-flex gap-2 flex-row" style="height: fit-content;">
+                                <button ng-class="{'disabled': item.isComplete}"
+                                    class="btn btn-info p-1 p-sm-2 d-flex align-items-center justify-content-center"
+                                    ng-click="edit(currentPage * showItem + $index)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-pen" viewBox="0 0 16 16">
+                                        <path
+                                            d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
+                                    </svg>
+                                </button>
+
+                                <button ng-class="{'disabled': item.isComplete}"
+                                    class="btn btn-danger  p-1 p-sm-2 d-flex align-items-center justify-content-center"
+                                    ng-click="remove(currentPage * showItem + $index)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path
+                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                        <path
+                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <hr>
+
+            <nav ng-cloak class="overflow-x-auto" aria-label="Page navigation example" ng-if="filteredItems.length">
+                <ul class="pagination">
+                    <li class="page-item" ng-class="{ 'disabled': currentPage === 0 }">
+                        <a class="page-link" href="" ng-click="setPage(currentPage - 1)">Previous</a>
+                    </li>
+                    <li class="page-item" ng-repeat="page in pagesVal" ng-class="{ 'active': currentPage === $index }">
+                        <a class="page-link" href="" ng-click="setPage($index)">
+                            {{ $index + 1 }}
+                        </a>
+                    </li>
+                    <li class="page-item" ng-class="{ 'disabled': currentPage === numberOfPages - 1 }">
+                        <a class="page-link" href="" ng-click="setPage(currentPage + 1)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
