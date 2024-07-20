@@ -1,5 +1,16 @@
 angular.module('myApp', [])
-    .controller('myCtrl', function ($scope, $filter) {
+    .controller('myCtrl', function ($scope, $filter, $timeout) {
+
+        // tooltip
+
+        $scope.isToolTip = false ;
+        $scope.showToolTip = function(){
+            $scope.isToolTip = !$scope.isToolTip;
+
+            $timeout(()=>{
+                $scope.isToolTip = !$scope.isToolTip;
+            }, 3000);
+        }
 
         // Initialize todos object and items
         $scope.todos = { isComplete: false, todo: '' };

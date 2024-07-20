@@ -8,92 +8,32 @@
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <style>
-        body {
-            background-color: #8EC5FC;
-            background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
-
-        }
-
-
-        .todo__wrapper {
-            width: 100%;
-            max-width: 700px;
-            margin: auto;
-            padding: 2rem;
-            background-color: #fff;
-            border-radius: 2rem;
-            min-height: calc(100vh - 6rem);
-        }
-
-        .form-check-input[type=checkbox] {
-            border-radius: var(--bs-border-radius);
-            border-color: var(--bs-success);
-            width: 1.5em;
-            height: 1.5em;
-        }
-
-        .form-check-input:focus {
-            border-color: var(--bs-success);
-            outline: 0;
-            box-shadow: 0 0 0 .25rem rgb(25, 135, 84, .25);
-        }
-
-        .form-check-input:checked {
-            background-color: var(--bs-success);
-            border-color: var(--bs-success);
-        }
-
-        table {
-            width: 100%;
-            border-spacing: .3rem;
-            border: 2px solid #7e7d7d;
-        }
-
-        td,
-        th {
-            border: 1px solid #7e7d7d;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(odd) {
-            background-color: #dddddd;
-        }
-
-        [ng\:cloak],
-        [ng-cloak],
-        [data-ng-cloak],
-        [x-ng-cloak],
-        .ng-cloak,
-        .x-ng-cloak {
-            display: none !important;
-        }
-
-        @media (max-width:525px) {
-            h1 {
-                font-size: 22px;
-            }
-
-            .todo__wrapper {
-                padding: 1rem;
-            }
-
-            .todo__form,
-            .todo__form button,
-            .todo__table,
-            .form-control,
-            .form-select {
-                font-size: 12px;
-
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body ng-app="myApp" ng-controller="myCtrl" class="py-5">
     <div class="container">
         <div class="todo__wrapper">
+            
+            <div class="todo__tooltip">
+
+                <span class="info-icon" ng-click="showToolTip()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                      </svg>
+                </span>
+
+                <div class="todo__tooltip-box" ng-if="isToolTip">
+                    Step one: Add here your tasks
+                </div>
+ 
+                <div class="todo__tooltip-box two" ng-if="isToolTip">
+                    Step two: Then click to add
+                </div>
+
+            </div>
+
             <h1 class="text-center mb-4 fw-bold">Please Add To Do into list</h1>
             <div class="todo__form">
                 <form ng-submit="formSubmit()" class="row">

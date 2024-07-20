@@ -1,0 +1,158 @@
+body {
+    background: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    background-size: 200% 200%;
+    animation: changing-bg 3s ease infinite;
+}
+
+@keyframes changing-bg {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+
+
+
+.todo__wrapper {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 2rem;
+    min-height: calc(100vh - 6rem);
+    position: relative;
+}
+
+.info-icon {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}
+
+.info-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.todo__tooltip-box {
+    position: absolute;
+    background-color: rgb(255, 243, 150);
+    width: 9.5rem;
+    height: 3.5rem;
+    border: 1px solid #000;
+    border-radius: 1rem;
+    padding: 0.1rem 1rem;
+    left: 2rem;
+    top: 2.5rem;
+}
+
+.todo__tooltip-box.two {
+    left: unset;
+    right: 4rem;
+}
+
+.todo__tooltip-box::after {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+    background-color: rgb(255, 243, 150);
+    position: absolute;
+    left: 1rem;
+    bottom: -9px;
+    rotate: 45deg;
+    border: 1px solid #000;
+    border-width: 0 1px 1px 0px;
+}
+
+.form-check-input[type=checkbox] {
+    border-radius: var(--bs-border-radius);
+    border-color: var(--bs-success);
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.form-check-input:focus {
+    border-color: var(--bs-success);
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgb(25, 135, 84, .25);
+}
+
+.form-check-input:checked {
+    background-color: var(--bs-success);
+    border-color: var(--bs-success);
+}
+
+table {
+    width: 100%;
+    border-spacing: .3rem;
+    border: 2px solid #7e7d7d;
+}
+
+td,
+th {
+    border: 1px solid #7e7d7d;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(odd) {
+    background-color: #dddddd;
+}
+
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
+}
+
+@media (max-width:525px) {
+    .todo__tooltip-box {
+        font-size: 12px;
+        width: 7.5rem;
+        top: 0.5rem;
+        left: 1rem;
+    }
+
+    .todo__tooltip-box.two::after {
+        left: unset;
+        right: 1rem;
+    }
+
+    .info-icon {
+        top: .5rem;
+    }
+
+    .info-icon svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .todo__wrapper {
+        padding: 1rem;
+    }
+
+    .todo__form,
+    .todo__form button,
+    .todo__table,
+    .form-control,
+    .form-select {
+        font-size: 12px;
+
+    }
+}
