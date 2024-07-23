@@ -77,10 +77,11 @@ angular.module('myApp', [])
                     $scope.items[$scope.editId] = $scope.todos;
                 } else {
                     $scope.items.unshift($scope.todos);
+                    // console.log($scope.todos, "new added");
                 }
                 $scope.fill = false;
                 $scope.updateVal = false;
-                $scope.todos = { isComplete: false, todo: '' }; // Reset form
+                $scope.todos = { isComplete: false, date: $scope.FormatToday, todo: '' }; // Reset form
                 localStorage.setItem("todo", JSON.stringify($scope.items));
                 $scope.filteredItems = $scope.items;
                 $scope.updateNumberOfPage();
