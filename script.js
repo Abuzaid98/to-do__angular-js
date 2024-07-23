@@ -46,15 +46,16 @@ angular.module('myApp', [])
         }
         // end
 
-
-
+        // Initialize current date
+        $scope.today = new Date();
+        $scope.FormatToday = $filter('date')($scope.today, 'dd/MM/yyyy');
 
         // Initialize todos object and items
-        $scope.todos = { isComplete: false, todo: '' };
+        $scope.todos = { isComplete: false, date: $scope.FormatToday, todo: '' };
         $scope.items = JSON.parse(localStorage.getItem("todo"))
-            || [{ isComplete: false, todo: 'I will start going to the gym next month' },
-            { isComplete: false, todo: 'I will start learning a new skill tomorrow' },
-            { isComplete: false, todo: 'I will begin reading a new book tomorrow' }];
+            || [{ isComplete: false, date: $scope.FormatToday, todo: 'I will start going to the gym next month' },
+            { isComplete: false, date: $scope.FormatToday, todo: 'I will start learning a new skill tomorrow' },
+            { isComplete: false, date: $scope.FormatToday, todo: 'I will begin reading a new book tomorrow' }];
 
         // console.log($scope.items, "check || value")
         $scope.fill = false;
@@ -65,7 +66,7 @@ angular.module('myApp', [])
         $scope.changinInput = function () {
             $scope.fill = false;
         }
-        
+
         // Function to add or update todo items
         $scope.formSubmit = function () {
             if ($scope.todos.todo === '') {

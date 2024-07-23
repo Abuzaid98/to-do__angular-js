@@ -219,8 +219,13 @@ tr:nth-child(odd) {
     .todo__form button,
     .todo__table,
     .form-control,
-    .form-select, .todo__tooltip-box button {
+    .form-select,
+    .todo__tooltip-box button {
         font-size: 12px;
 
+    }
+
+    table {
+        min-width: 400px;
     }
 }
