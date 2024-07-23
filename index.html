@@ -14,23 +14,39 @@
 <body ng-app="myApp" ng-controller="myCtrl" class="py-5">
     <div class="container">
         <div class="todo__wrapper">
-            
-            <div class="todo__tooltip">
 
-                <span class="info-icon" ng-click="showToolTip()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-                      </svg>
+            <div class="todo__tooltip" ng-cloak>
+
+                <span class="info-icon" ng-click="showToolTip()" title="Tooltip">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                        <path
+                            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                    </svg>
                 </span>
 
-                <div class="todo__tooltip-box" ng-if="isToolTip">
-                    Step one: Add here your tasks
+                <div class="todo__tooltip-layer" ng-class="{'active': isToolTip}"></div>
+
+                <div class="todo__tooltip-boxes" ng-show="isToolTip">
+
+                    <div class="todo__tooltip-box" ng-class="{'active': isToolTip}">
+                        Step one: Add here your tasks
+                        <button type="button" class="btn btn-warning next" ng-click="tooltipNext()">Next</button>
+                    </div>
+
+                    <div class="todo__tooltip-box two" ng-class="{'active': isToolTip}">
+                        Step two: Then click to add
+                        <button type="button" class="btn btn-warning next" ng-click="tooltipNext()">Next</button>
+                    </div>
+
+
+                    <div class="todo__tooltip-box three" ng-class="{'active': isToolTip}">
+                        You can search here existing tasks
+                        <button type="button" class="btn btn-warning finish" ng-click="tooltipFinish()">Finish</button>
+                    </div>
                 </div>
- 
-                <div class="todo__tooltip-box two" ng-if="isToolTip">
-                    Step two: Then click to add
-                </div>
+
 
             </div>
 
@@ -38,12 +54,13 @@
             <div class="todo__form">
                 <form ng-submit="formSubmit()" class="row">
                     <div class="col-8">
-                        <input type="text" ng-model="todos.todo" id="myInput" class="form-control"
-                            placeholder="Add your items">
+                        <input type="text" ng-model="todos.todo" ng-change="changinInput()" id="myInput" class="form-control"
+                            placeholder="Add your items" ng-class="{'active': isInputText}">
                         <span ng-cloak ng-show="fill" class="text-danger">{{writeSome}}</span>
                     </div>
                     <div class="col-4">
-                        <button ng-cloak type="submit" id="submitBtn" class="btn btn-success w-100">
+                        <button ng-cloak type="submit" id="submitBtn" class="btn btn-success w-100"
+                            ng-class="{'active': isSubmitBtn }">
                             {{updateVal ? "Update" : "Add"}}
                         </button>
                     </div>
@@ -51,8 +68,8 @@
             </div>
 
             <!-- Filtering input -->
-            <input type="text" ng-model="filterVal" ng-change="inputFilter()" class="form-control my-2"
-                placeholder="Search your items">
+            <input type="text" ng-model="filterVal" ng-change="inputFilter()" class="form-control my-2 searchYourItem"
+                placeholder="Search your items" ng-class="{'active': isInputSearch}">
 
 
             <!-- Select option to show number of items in one time -->
@@ -81,7 +98,7 @@
                             {{item.todo}}
                         </td>
                         <td class="text-center">
-                            <input class="form-check-input" type="checkbox"
+                            <input class="form-check-input m-0" type="checkbox"
                                 ng-change="isCompFunc(currentPage * showItem + $index)" ng-model="item.isComplete">
                         </td>
                         <td>
