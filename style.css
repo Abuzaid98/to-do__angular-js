@@ -32,10 +32,13 @@ body {
     position: relative;
 }
 
+/* todo toltip relates css */
 .info-icon {
     position: absolute;
+    z-index: 11;
     right: 1rem;
     top: 1rem;
+    cursor: pointer;
 }
 
 .info-icon svg {
@@ -43,21 +46,53 @@ body {
     height: 1.5rem;
 }
 
+.todo__tooltip-layer {
+    visibility: hidden;
+    opacity: 0;
+    transition: .3s all;
+}
+
+.todo__tooltip-layer.active {
+    visibility: visible;
+    opacity: 1;
+    position: fixed;
+    z-index: 10;
+    inset: 0;
+    backdrop-filter: blur(6px);
+}
+
 .todo__tooltip-box {
     position: absolute;
     background-color: rgb(255, 243, 150);
-    width: 9.5rem;
-    height: 3.5rem;
+    width: fit-content;
+    height: auto;
     border: 1px solid #000;
     border-radius: 1rem;
-    padding: 0.1rem 1rem;
+    padding: 0.5rem 1rem;
     left: 2rem;
-    top: 2.5rem;
+    top: 3.5rem;
+    display: none;
 }
+
+
+
 
 .todo__tooltip-box.two {
     left: unset;
     right: 4rem;
+}
+
+.todo__tooltip-box.two .next {
+    position: absolute;
+    left: -4rem;
+    right: unset;
+    top: 0;
+}
+
+.todo__tooltip-box.three {
+    left: 2rem;
+    right: unset;
+    top: 6.3rem;
 }
 
 .todo__tooltip-box::after {
@@ -66,11 +101,40 @@ body {
     height: 1rem;
     background-color: rgb(255, 243, 150);
     position: absolute;
-    left: 1rem;
+    left: 2rem;
     bottom: -9px;
     rotate: 45deg;
     border: 1px solid #000;
     border-width: 0 1px 1px 0px;
+}
+
+.todo__tooltip-box.two::after {
+    left: unset;
+    right: 2rem;
+}
+
+.todo__tooltip-box.active {
+    z-index: 12;
+}
+
+.todo__tooltip-box .next {
+    position: absolute;
+    right: -4rem;
+    top: 0;
+}
+
+.todo__tooltip-box .finish {
+    position: absolute;
+    right: -4.5rem;
+    top: 0;
+}
+
+
+.todo__form button[type='submit'].active,
+.todo__form input.active,
+.searchYourItem.active {
+    position: relative;
+    z-index: 11;
 }
 
 .form-check-input[type=checkbox] {
@@ -120,9 +184,12 @@ tr:nth-child(odd) {
 @media (max-width:525px) {
     .todo__tooltip-box {
         font-size: 12px;
-        width: 7.5rem;
-        top: 0.5rem;
+        top: 1.5rem;
         left: 1rem;
+    }
+
+    .todo__tooltip-box.three {
+        top: 4rem;
     }
 
     .todo__tooltip-box.two::after {
@@ -151,7 +218,7 @@ tr:nth-child(odd) {
     .todo__form button,
     .todo__table,
     .form-control,
-    .form-select {
+    .form-select, .todo__tooltip-box button {
         font-size: 12px;
 
     }
