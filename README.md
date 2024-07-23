@@ -1,5 +1,7 @@
 # AngularJS To-Do Application
 
+[Check out my live website!](https://abuzaid-todo-ng.netlify.app/)
+
 This is a simple To-Do application built with AngularJS and Bootstrap. The app allows users to add, edit, and remove tasks, and also track the completion status of each task.
 
 ## Features
@@ -14,7 +16,7 @@ This is a simple To-Do application built with AngularJS and Bootstrap. The app a
 
 ## Screenshots
 
-![To-Do App Screenshot](link-to-screenshot) 
+![To-Do App Screenshot](img/todo-ng.jpg) 
 
 ## Getting Started
 
