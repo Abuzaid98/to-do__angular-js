@@ -87,21 +87,29 @@
 
                 <table ng-cloak ng-if="filteredItems.length">
                     <tr>
-                        <th style="width: 11%;">SN</th>
-                        <th style="width: 75%;">Todos</th>
-                        <th>Done?</th>
-                        <th>Actions</th>
+                        <th>SN</th>
+                        <th style="width: 90%;">Todos</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Done?</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                     <tr ng-repeat="item in filteredItems | limitTo: showItem : currentPage * showItem track by $index">
                         <th>{{currentPage * showItem + $index + 1}}.</th>
+
                         <td ng-class="{'text-decoration-line-through': item.isComplete}" class="fw-semibold">
                             {{item.todo}}
                         </td>
+
+                        <td class="text-center">
+                            {{item.date}}
+                        </td>
+
                         <td class="text-center">
                             <input class="form-check-input m-0" type="checkbox"
                                 ng-change="isCompFunc(currentPage * showItem + $index)" ng-model="item.isComplete">
                         </td>
-                        <td>
+
+                        <td class="text-center">
                             <div class="buttons col-2 d-flex gap-2 flex-row" style="height: fit-content;">
                                 <button ng-class="{'disabled': item.isComplete}"
                                     class="btn btn-info p-1 p-sm-2 d-flex align-items-center justify-content-center"
